@@ -15,17 +15,17 @@ const PaginationControls = ({ currentPage, totalPages, onPageChange }: Paginatio
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        ⬅ Oldingi
+        ⬅ 
       </Button>
       <span className="text-lg font-semibold">
-        {currentPage} / {totalPages}
+        {currentPage}
       </span>
       <Button
         variant="outline"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        Keyingi ➡
+         ➡
       </Button>
     </div>
   );

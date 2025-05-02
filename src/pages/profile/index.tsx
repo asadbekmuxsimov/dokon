@@ -1,73 +1,131 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import user from "@/assets/icons/user.svg";
-import { useSelector } from "react-redux";
+
+import {
+  BellRing,
+  Briefcase,
+  DoorOpen,
+  House,
+  LogOut,
+  MoveLeft,
+  Slash,
+  TicketSlash,
+  User,
+} from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Buyurtma from "./Buyurtma";
 import { RootState } from "@/store/store";
 
-const ProfilePage = () => {
-    const orders = useSelector((state: RootState) => state.orders.list);
+function Profile() {
+  const [otish, setOtish] = useState("profil");
+  const dispatch = useDispatch();
 
-    return (
-        <div className="max-w-3xl mx-auto mt-12 mb-12 px-6 py-8 bg-white shadow-lg rounded-2xl">
-            <div className="flex items-center gap-5 border-b pb-6 mb-6">
-                <Image src={user} alt="user" width={64} height={64} />
-                <div>
-                    <h2 className="text-3xl font-bold text-gray-800">
-                        Foydalanuvchi Profil
-                    </h2>
-                    <p className="text-gray-600 text-sm">muxsimov@gmail.com</p>
-                </div>
+  return (
+    <div className="pb-32 container mx-auto px-4">
+      <div className="flex items-center gap-2 text-gray-700 text-sm mb-6">
+        <Link href="/" className="flex items-center gap-1 hover:underline">
+          <MoveLeft size={20} />
+          <span>Bosh sahifa</span>
+        </Link>
+        <Slash size={16} />
+        <span className="text-blue-600 font-medium">Shaxsiy kabinet</span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="w-full max-w-md p-6 ">
+          <div
+            onClick={() => {
+              setOtish("profil");
+            }}
+            className="flex  cursor-pointer items-center gap-4 mb-4"
+          >
+            <div className="bg-blue-600 p-3 rounded-full">
+              <User size={36} className="text-white" />
             </div>
-
-            <section className="mb-10">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                    Shaxsiy ma'lumotlar
-                </h3>
-                <ul className="space-y-1 text-gray-700">
-                    <li><strong>Ism:</strong> Asadbek</li>
-                    <li><strong>Email:</strong> muxsimov@gmail.com</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                    Xaridlar tarixi
-                </h3>
-
-                {orders.length === 0 ? (
-                    <p className="text-gray-600">
-                        Hech qanday xarid qilinmagan.
+            <div>
+              <p className="text-lg font-semibold text-gray-800">Asadbek</p>
+              <p className="text-sm text-gray-500">+998 95 111 60 50</p>
+            </div>
+          </div>
+          <hr className="border-gray-200 mb-4" />
+          <ul className="space-y-2">
+            <li className="text-sm text-gray-600">ID:123</li>
+          </ul>
+          <div>
+            <div>
+              <div className=" flex flex-col gap-5">
+                <div className=" hover:shadow-xl flex items-center gap-4 p-5 rounded ">
+                  <House />
+                  <p className=" text-xl transition  transform  hover:pl-5 duration-200 cursor-pointer ">
+                    mening tanlo'vim
+                  </p>
+                </div>{" "}
+                <div className=" hover:shadow-xl flex items-center gap-4 p-5 rounded ">
+                  <TicketSlash />
+                  <p className=" text-xl transition  transform  hover:pl-5 duration-200 cursor-pointer ">
+                    to'lo'v tarihi
+                  </p>
+                </div>{" "}
+                <div
+                  onClick={() => {
+                    setOtish("buyurtma");
+                  }}
+                  className=" hover:shadow-xl flex items-center gap-4 p-5 rounded "
+                >
+                  <Briefcase />
+                  <p className=" text-xl transition  transform  hover:pl-5 duration-200 cursor-pointer ">
+                    online buyurtma
+                  </p>
+                </div>{" "}
+                {/* <Link href="/" onClick={() => logaut()}> */}
+                <div className=" border hover:border-red-700 flex items-center gap-4 p-5 rounded ">
+                    <DoorOpen />
+                    <p className=" text-xl text-red-700 transition  transform  hover:pl-5 duration-200 cursor-pointer ">
+                      Chiqish
                     </p>
-                ) : (
-                    <ul className="space-y-6">
-                        {orders.map((order) => (
-                            <li
-                                key={order.id}
-                                className="flex items-center gap-5 bg-gray-50 border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300"
-                            >
-                                <div className="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg border">
-                                    <Image
-                                        src={order.imageUrl}
-                                        alt={order.name}
-                                        width={96}
-                                        height={96}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-
-                                <div className="flex-1">
-                                    <h4 className="text-lg font-bold text-gray-800">{order.name}</h4>
-                                    <p className="text-blue-600 font-semibold">${order.price}</p>
-                                    <p className="text-sm text-gray-500 mt-1">Buyurtma ID: #{order.id}</p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </section>
+                  </div>
+                {/* </Link> */}
+              </div>
+            </div>
+          </div>
         </div>
-    );
-};
 
-export default ProfilePage;
+
+        <div className=" grid grid-cols-2 gap-5">
+          {otish === "buyurtma" ? (
+            <>
+              <Buyurtma />
+            </>
+          ) : (
+            <>
+              <div className=" flex w-[1200px]  gap-12">
+                <div className=" border pb-25 w-[450px] h-[300px] border-gray-300 rounded-md ">
+                  <div className=" h-32">
+                    <div className="h-[1px] w-full bg-[lightgrey]"></div>
+                    <div className=" p-2">
+                      <p className=" text-gray-700">Tel: </p>
+                    </div>
+                  </div>
+                </div>{" "}
+                <div className=" border pb-25 w-[450px] h-[300px] border-gray-300 rounded-md ">
+                  <div>
+                    <div className=" items-center flex">
+                      <BellRing />
+                    </div>
+                    <div className="h-[1px] bg-[lightgrey] w-full"></div>
+                    <div className=" p-2">
+                      <p className=" text-gray-700">Tel: </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Profile;

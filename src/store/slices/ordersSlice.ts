@@ -19,6 +19,7 @@ const ordersSlice = createSlice({
     setOrders: (state, action: PayloadAction<Order[]>) => {
       state.list = action.payload;
     },
+    
   },
 });
 

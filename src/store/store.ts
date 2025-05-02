@@ -2,12 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import favoritesReducer from "./slices/favoritesSlice";
 import cartReducer from "./slices/cartSlice";
 import ordersReducer from "./slices/ordersSlice";
-
+import authReducer from "./slices/Login";
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
     favorites: favoritesReducer,
     orders: ordersReducer,
+    auth: authReducer,
   },
 });
 
